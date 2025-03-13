@@ -1,0 +1,8 @@
+name: cicd
+services:
+  - name: cicd
+    image:
+      registry_type: GHCR
+      registry: christophemees
+      repository: cicd-demo
+      digest: ${CICD_DIGEST}

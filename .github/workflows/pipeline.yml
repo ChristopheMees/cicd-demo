@@ -121,6 +121,6 @@ jobs:
       - name: Deploy the app
         uses: digitalocean/app_action/deploy@v2
         env:
-          SAMPLE_DIGEST: ${{ steps.build-and-push.outputs.digest }}
+          CICD_DIGEST: ${{ steps.build-and-push.outputs.digest }}
         with:
           token: ${{ secrets.DO_ACCESS_TOKEN }}
