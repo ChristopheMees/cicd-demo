@@ -101,8 +101,6 @@ jobs:
     needs: publish
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
       - name: Log in to the Container registry
         uses: docker/login-action@v3.3.0
         with:
@@ -111,8 +109,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy the app
         uses: digitalocean/app_action/deploy@v2
-        env:
-          CICD_DIGEST: ${{ steps.build-and-push.outputs.digest }}
         with:
           token: ${{ secrets.DO_ACCESS_TOKEN }}
 
@@ -128,7 +124,7 @@ jobs:
           method: GET
       - name: Check response
         id: check-fib
-        if: ${{ steps.call-fib.outputs.response != '[0,1,1,2,3,5,8,13,21,33]' }}
+        if: ${{ steps.call-fib.outputs.response != '[0,1,1,2,3,5,8,13,21,34]' }}
         uses: actions/github-script@v3
         with:
           script: |
