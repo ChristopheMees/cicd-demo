@@ -35,6 +35,7 @@ jobs:
       run: mvn verify
 
   publish:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
