@@ -135,8 +135,7 @@ jobs:
         with:
           url: 'https://cicd-app-74sa7.ondigitalocean.app/fib?count=10'
           method: GET
-      - name: Show Response
-        run: |
-          echo ${{ steps.myRequest.outputs.response }}
-          echo ${{ steps.myRequest.outputs.headers }}
-          echo ${{ steps.myRequest.outputs.status }}
+      - name: Check response
+        id: check-fib
+        if: ${{ steps.myRequest.outputs.response != '[0,1,1,2,3,5,8,13,21,34]' }}
+        run: exit 1
