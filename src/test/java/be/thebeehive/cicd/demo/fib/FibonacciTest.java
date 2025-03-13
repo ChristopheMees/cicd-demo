@@ -12,13 +12,20 @@ class FibonacciTest {
     void getNumbersZero()
     {
         int[] result = controller.getNumbers(0);
-        assertThat(result).containsExactly(0);
+        assertThat(result).isEmpty();
     }
 
     @Test
     void getNumbersOne()
     {
         int[] result = controller.getNumbers(1);
+        assertThat(result).containsExactly(0);
+    }
+
+    @Test
+    void getNumbersTwo()
+    {
+        int[] result = controller.getNumbers(2);
         assertThat(result).containsExactly(0, 1);
     }
 

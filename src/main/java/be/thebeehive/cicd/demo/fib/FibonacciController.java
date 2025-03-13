@@ -11,8 +11,9 @@ public class FibonacciController {
 
     @GetMapping
     public int[] getNumbers(@RequestParam("count") int count) {
-        if (count == 0) return new int[]{0};
-        if (count == 1) return new int[]{0, 1};
+        if (count == 0) return new int[0];
+        if (count == 1) return new int[]{0};
+        if (count == 2) return new int[]{0, 1};
 
         int[] arr = new int[count];
         arr[0] = 0;
