@@ -6,10 +6,10 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Build
+name: Validate
 
 on:
-  push:
+  pull_request:
     branches: [ "main" ]
 
 jobs:
