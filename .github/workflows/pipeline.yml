@@ -129,4 +129,7 @@ jobs:
       - name: Check response
         id: check-fib
         if: ${{ steps.call-fib.outputs.response != '[0,1,1,2,3,5,8,13,21,34]' }}
-        run: exit 1
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('E2E Test failure')
