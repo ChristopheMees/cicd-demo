@@ -133,7 +133,8 @@ jobs:
         id: call-fib
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "https://cicd-app-74sa7.ondigitalocean.app/fib?count=10"
+          url: 'https://cicd-app-74sa7.ondigitalocean.app/fib?count=10'
+          method: GET
       - name: Show Response
         run: |
           echo ${{ steps.myRequest.outputs.response }}
