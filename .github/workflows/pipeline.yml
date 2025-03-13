@@ -137,5 +137,5 @@ jobs:
           method: GET
       - name: Check response
         id: check-fib
-        if: ${{ steps.myRequest.outputs.response != '[0,1,1,2,3,5,8,13,21,34]' }}
+        if: ${{ steps.call-fib.outputs.response != '[0,1,1,2,3,5,8,13,21,34]' }}
         run: exit 1
