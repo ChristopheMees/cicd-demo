@@ -106,7 +106,7 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
-  deploy-image:
+  deploy:
     needs: publish
     runs-on: ubuntu-latest
     steps:
@@ -124,3 +124,18 @@ jobs:
           CICD_DIGEST: ${{ steps.build-and-push.outputs.digest }}
         with:
           token: ${{ secrets.DO_ACCESS_TOKEN }}
+
+  e2e-testing:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Fib
+        id: call-fib
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://cicd-app-74sa7.ondigitalocean.app/fib?count=10"
+      - name: Show Response
+        run: |
+          echo ${{ steps.myRequest.outputs.response }}
+          echo ${{ steps.myRequest.outputs.headers }}
+          echo ${{ steps.myRequest.outputs.status }}
