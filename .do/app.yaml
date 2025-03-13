@@ -5,4 +5,4 @@ services:
       registry_type: GHCR
       registry: christophemees
       repository: cicd-demo
-      digest: main
+      tag: main
