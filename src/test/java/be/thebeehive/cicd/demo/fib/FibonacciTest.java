@@ -11,28 +11,28 @@ class FibonacciTest {
     @Test
     void getNumbersZero()
     {
-        int[] result = controller.getNumbers(0);
+        long[] result = controller.getNumbers(0);
         assertThat(result).isEmpty();
     }
 
     @Test
     void getNumbersOne()
     {
-        int[] result = controller.getNumbers(1);
+        long[] result = controller.getNumbers(1);
         assertThat(result).containsExactly(0);
     }
 
     @Test
     void getNumbersTwo()
     {
-        int[] result = controller.getNumbers(2);
+        long[] result = controller.getNumbers(2);
         assertThat(result).containsExactly(0, 1);
     }
 
     @Test
     void getNumbersMore()
     {
-        int[] result = controller.getNumbers(11);
+        long[] result = controller.getNumbers(11);
         assertThat(result).containsExactly(0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
     }
 }

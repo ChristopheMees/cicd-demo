@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/fib")
 public class FibonacciController {
-// test
-    @GetMapping
-    public int[] getNumbers(@RequestParam("count") int count) {
-        if (count == 0) return new int[0];
-        if (count == 1) return new int[]{0};
-        if (count == 2) return new int[]{0, 1};
 
-        int[] arr = new int[count];
+    @GetMapping
+    public long[] getNumbers(@RequestParam("count") int count) {
+        if (count == 0) return new long[0];
+        if (count == 1) return new long[]{0};
+        if (count == 2) return new long[]{0, 1};
+
+        long[] arr = new long[count];
         arr[0] = 0;
         arr[1] = 1;
 

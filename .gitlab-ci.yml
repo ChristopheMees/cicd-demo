@@ -1,0 +1,69 @@
+# This file is a template, and might need editing before it works on your project.
+# This is a sample GitLab CI/CD configuration file that should run without any modifications.
+# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
+# it uses echo commands to simulate the pipeline execution.
+#
+# A pipeline is composed of independent jobs that run scripts, grouped into stages.
+# Stages run in sequential order, but jobs within stages run in parallel.
+#
+# For more information, see: https://docs.gitlab.com/ee/ci/yaml/#stages
+#
+# You can copy and paste this template into a new `.gitlab-ci.yml` file.
+# You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
+#
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/development/cicd/templates/
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+
+include:
+  - component: $CI_SERVER_FQDN/to-be-continuous/maven/gitlab-ci-maven@4.3.1
+  - component: $CI_SERVER_FQDN/to-be-continuous/docker/gitlab-ci-docker@6.1.3
+    inputs:
+      hadolint-disabled: true
+      trivy-disabled: true
+      prod-publish-strategy: none
+      build-args: "--custom-platform 'linux/arm64'"
+
+stages:          # List of stages for jobs, and their order of execution
+  - test
+  - publish
+  - package-test
+  - deploy
+  - smoke-test
+  - e2e-test
+
+mvn-build:       # This job runs in the build stage, which runs first.
+  stage: test
+
+docker-hadolint:
+  stage: publish
+
+docker-kaniko-build:
+  stage: publish    
+
+docker-dind-build:
+  stage: publish
+
+docker-buildah-build:
+  stage: publish
+
+docker-publish:
+  stage: publish
+  needs:
+    - docker-kaniko-build
+
+ping-service:
+  stage: smoke-test
+  script:
+    - .gitlab/ping.sh
+
+run-e2e-tests:
+  stage: e2e-test
+  script:
+    - .gitlab/end-to-end-tests.sh
+
+deploy-job:
+  stage: deploy
+  script:
+    - .gitlab/trigger-deploy.sh
