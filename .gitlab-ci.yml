@@ -35,12 +35,18 @@ stages:          # List of stages for jobs, and their order of execution
 
 mvn-build:       # This job runs in the build stage, which runs first.
   stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 docker-hadolint:
   stage: publish
 
 docker-kaniko-build:
-  stage: publish    
+  stage: publish
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
 
 docker-dind-build:
   stage: publish
@@ -57,13 +63,19 @@ ping-service:
   stage: smoke-test
   script:
     - .gitlab/ping.sh
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 run-e2e-tests:
   stage: e2e-test
   script:
     - .gitlab/end-to-end-tests.sh
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 deploy-job:
   stage: deploy
   script:
     - .gitlab/trigger-deploy.sh
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
